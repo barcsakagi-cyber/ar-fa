@@ -28,11 +28,17 @@
 
   <!-- markerhez kötött fa -->
   <a-marker preset="hiro">
-    <a-entity
+   <a-entity
   gltf-model="#tree"
-  scale="0.05 0.05 0.05"
-  position="0 0 -1">
+  scale="0.001 0.001 0.001"
+  position="0 0 -1"
+  material="opacity: 0.2"
+  animation="property: scale;
+             to: 0.05 0.05 0.05;
+             dur: 3000;
+             easing: easeOutQuad">
 </a-entity>
+
   </a-marker>
 
   <a-entity camera></a-entity>
@@ -41,6 +47,7 @@
 
 </body>
 </html>
+
 
 
 
