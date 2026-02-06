@@ -1,52 +1,162 @@
 <!DOCTYPE html>
-<html>
+<html lang="hu">
 <head>
-  <meta charset="utf-8">
-  <title>AR Fa – Hajnal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- A-Frame + AR.js -->
-  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+<title>A fa térképe</title>
 
-  <style>
-    body { margin: 0; overflow: hidden; }
-  </style>
+<style>
+body {
+  margin: 0;
+  font-family: "Georgia", serif;
+  background: linear-gradient(#f6efe7, #e8dccb);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* FA KONTÉNER */
+.tree-container {
+  position: relative;
+  width: 320px;
+  height: 480px;
+}
+
+/* TÖRZS */
+.trunk {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 18px;
+  height: 200px;
+  background: #6e4b2a;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  opacity: 0.9;
+}
+
+/* LOMB – akvarell hatás */
+.crown {
+  position: absolute;
+  bottom: 160px;
+  left: 50%;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle at 40% 40%, #9fbf9f, #6f8f6f);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  filter: blur(1px);
+  opacity: 0.85;
+}
+
+/* PONTOK */
+.point {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: #ffffffdd;
+  border-radius: 50%;
+  border: 2px solid #6e4b2a;
+  cursor: pointer;
+  display: none;
+}
+
+.point.active {
+  display: block;
+}
+
+/* PONT POZÍCIÓK */
+#p1 { top: 360px; left: 150px; }
+#p2 { top: 300px; left: 90px; }
+#p3 { top: 250px; left: 200px; }
+#p4 { top: 180px; left: 70px; }
+#p5 { top: 130px; left: 210px; }
+#p6 { top: 70px; left: 140px; }
+
+/* MODAL */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #fffaf3;
+  padding: 24px;
+  max-width: 300px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+button {
+  margin-top: 16px;
+  padding: 10px 18px;
+  border: none;
+  background: #6e4b2a;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+</style>
 </head>
 
 <body>
 
-<a-scene
-  embedded
-  arjs="sourceType: webcam; debugUIEnabled: false;"
-  vr-mode-ui="enabled: false"
->
+<div class="tree-container">
+  <div class="trunk"></div>
+  <div class="crown"></div>
 
-  <!-- modell -->
-  <a-assets>
-    <a-asset-item id="tree" src="stylized_tree.glb"></a-asset-item>
-  </a-assets>
+  <div class="point active" id="p1" onclick="openTask(1)"></div>
+  <div class="point" id="p2" onclick="openTask(2)"></div>
+  <div class="point" id="p3" onclick="openTask(3)"></div>
+  <div class="point" id="p4" onclick="openTask(4)"></div>
+  <div class="point" id="p5" onclick="openTask(5)"></div>
+  <div class="point" id="p6" onclick="openTask(6)"></div>
+</div>
 
-  <!-- markerhez kötött fa -->
-  <a-marker preset="hiro">
-   <a-entity
-  gltf-model="#tree"
-  scale="0.001 0.001 0.001"
-  position="0 0 -1"
-  material="opacity: 0.2"
-  animation="property: scale;
-             to: 0.05 0.05 0.05;
-             dur: 3000;
-             easing: easeOutQuad">
-</a-entity>
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <div id="taskText"></div>
+    <button onclick="closeTask()">Bezár</button>
+  </div>
+</div>
 
-  </a-marker>
+<script>
+const tasks = [
+  "1. állomás\n\nItt jön majd az első feladat szövege.",
+  "2. állomás\n\nMásodik feladat.",
+  "3. állomás\n\nItt lehet az AR-feladat.",
+  "4. állomás\n\nNegyedik feladat.",
+  "5. állomás\n\nÖtödik feladat.",
+  "6. állomás\n\nVégső üzenet és az ajándék helye."
+];
 
-  <a-entity camera></a-entity>
+function openTask(i) {
+  document.getElementById("taskText").innerText = tasks[i-1];
+  document.getElementById("modal").style.display = "flex";
 
-</a-scene>
+  // következő pont aktiválása
+  const next = document.getElementById("p" + (i+1));
+  if (next) next.classList.add("active");
+}
+
+function closeTask() {
+  document.getElementById("modal").style.display = "none";
+}
+</script>
 
 </body>
 </html>
+
+
+
 
 
 
