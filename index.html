@@ -3,161 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>A fa térképe</title>
+<title>A fa növekedése</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: "Georgia", serif;
-  background: linear-gradient(#f6efe7, #e8dccb);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+body{
+  margin:0;
+  background:#f6efe7;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  font-family:Georgia, serif;
 }
 
-/* FA KONTÉNER */
-.tree-container {
-  position: relative;
-  width: 320px;
-  height: 480px;
+.container{
+  text-align:center;
 }
 
-/* TÖRZS */
-.trunk {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 18px;
-  height: 200px;
-  background: #6e4b2a;
-  transform: translateX(-50%);
-  border-radius: 10px;
-  opacity: 0.9;
+img{
+  width:90vw;
+  max-width:500px;
+  transition:opacity 1.5s ease;
 }
 
-/* LOMB – akvarell hatás */
-.crown {
-  position: absolute;
-  bottom: 160px;
-  left: 50%;
-  width: 240px;
-  height: 240px;
-  background: radial-gradient(circle at 40% 40%, #9fbf9f, #6f8f6f);
-  border-radius: 50%;
-  transform: translateX(-50%);
-  filter: blur(1px);
-  opacity: 0.85;
-}
-
-/* PONTOK */
-.point {
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  background: #ffffffdd;
-  border-radius: 50%;
-  border: 2px solid #6e4b2a;
-  cursor: pointer;
-  display: none;
-}
-
-.point.active {
-  display: block;
-}
-
-/* PONT POZÍCIÓK */
-#p1 { top: 360px; left: 150px; }
-#p2 { top: 300px; left: 90px; }
-#p3 { top: 250px; left: 200px; }
-#p4 { top: 180px; left: 70px; }
-#p5 { top: 130px; left: 210px; }
-#p6 { top: 70px; left: 140px; }
-
-/* MODAL */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  display: none;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background: #fffaf3;
-  padding: 24px;
-  max-width: 300px;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-button {
-  margin-top: 16px;
-  padding: 10px 18px;
-  border: none;
-  background: #6e4b2a;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
+button{
+  margin-top:20px;
+  padding:12px 20px;
+  border:none;
+  background:#6e4b2a;
+  color:white;
+  border-radius:8px;
+  font-size:16px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="tree-container">
-  <div class="trunk"></div>
-  <div class="crown"></div>
-
-  <div class="point active" id="p1" onclick="openTask(1)"></div>
-  <div class="point" id="p2" onclick="openTask(2)"></div>
-  <div class="point" id="p3" onclick="openTask(3)"></div>
-  <div class="point" id="p4" onclick="openTask(4)"></div>
-  <div class="point" id="p5" onclick="openTask(5)"></div>
-  <div class="point" id="p6" onclick="openTask(6)"></div>
-</div>
-
-<!-- MODAL -->
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <div id="taskText"></div>
-    <button onclick="closeTask()">Bezár</button>
-  </div>
+<div class="container">
+  <img id="tree" src="fa-fazisok.png">
+  <br>
+  <button onclick="nextPhase()">Tovább</button>
 </div>
 
 <script>
-const tasks = [
-  "1. állomás\n\nItt jön majd az első feladat szövege.",
-  "2. állomás\n\nMásodik feladat.",
-  "3. állomás\n\nItt lehet az AR-feladat.",
-  "4. állomás\n\nNegyedik feladat.",
-  "5. állomás\n\nÖtödik feladat.",
-  "6. állomás\n\nVégső üzenet és az ajándék helye."
-];
+let phase = 1;
+const tree = document.getElementById("tree");
 
-function openTask(i) {
-  document.getElementById("taskText").innerText = tasks[i-1];
-  document.getElementById("modal").style.display = "flex";
+function nextPhase(){
+  phase++;
 
-  // következő pont aktiválása
-  const next = document.getElementById("p" + (i+1));
-  if (next) next.classList.add("active");
-}
+  if(phase > 6){
+    alert("Megérkeztél.");
+    return;
+  }
 
-function closeTask() {
-  document.getElementById("modal").style.display = "none";
+  tree.style.opacity = 0;
+
+  setTimeout(()=>{
+    tree.src = "fa-fazisok.png#"+phase; 
+    tree.style.opacity = 1;
+  }, 700);
 }
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
