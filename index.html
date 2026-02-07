@@ -74,10 +74,8 @@ button{
 
 <div id="game">
 
-<!-- KEZDŐ FA -->
-<img id="treeImg" class="tree" src="fa1.jpg" onclick="openPuzzle()">
+<img id="treeImg" class="tree" src="fa1.png" onclick="openPuzzle()">
 
-<!-- FELADAT -->
 <div id="puzzle" class="card hidden">
   <h2 id="title"></h2>
   <p id="text"></p>
@@ -86,7 +84,6 @@ button{
   <button onclick="checkAnswer()">Tovább</button>
 </div>
 
-<!-- VIDEÓ + SZÖVEG -->
 <div id="end" class="hidden">
   <video id="finalVideo" width="100%" autoplay controls onended="showMessage()">
     <source src="video.mp4" type="video/mp4">
@@ -121,7 +118,7 @@ Fejtsd meg ezt az idő rejtvényt, hogy közelebb kerülj a jelenünkhöz.
 H – K – S – C – P – S – ?
 Milyen betű kerül a kérdőjel helyére?`,
 answer:"V",
-tree:"fa2.jpg"
+tree:"fa2.png"
 },
 {
 title:"2. állomás",
@@ -134,7 +131,7 @@ A Nyírfa nem az első és nem az utolsó.
 A Tölgy közvetlenül a Bükk után áll.
 A Fűzfa üdvözli a látogatókat a kertben.`,
 answer:"FNYBT",
-tree:"fa3.jpg"
+tree:"fa3.png"
 },
 {
 title:"3. állomás",
@@ -144,7 +141,7 @@ A szavaknak van a legnagyobb súlya, de a legnagyobb értéke is olykor.
 Mi az alábbi szó értéke?
 LEVÉL`,
 answer:"105",
-tree:"fa4.jpg"
+tree:"fa4.png"
 },
 {
 title:"4. állomás",
@@ -154,7 +151,7 @@ ami még ilyenkor is összetartott minket.
 
 Keresd meg, mi áll a VAD és a FA szó között?`,
 answer:"ALMA",
-tree:"fa5.jpg"
+tree:"fa5.png"
 },
 {
 title:"5. állomás",
@@ -181,7 +178,6 @@ function checkAnswer(){
   const val = document.getElementById("answer").value.trim().toUpperCase();
 
   if(val === puzzles[current].answer){
-
     document.getElementById("puzzle").classList.add("hidden");
 
     if(puzzles[current].tree){
@@ -190,7 +186,6 @@ function checkAnswer(){
       document.getElementById("treeImg").classList.add("hidden");
       document.getElementById("end").classList.remove("hidden");
     }
-
   } else {
     alert("Ez most nem jó megoldás. 🌿");
   }
