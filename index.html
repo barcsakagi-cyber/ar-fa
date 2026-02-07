@@ -41,7 +41,7 @@ button{
 <body>
 
 <div class="container">
-  <img id="tree" src="fa-fazisok.png">
+  <img id="tree" src="fa1.png">
   <br>
   <button onclick="nextPhase()">Tovább</button>
 </div>
@@ -61,7 +61,7 @@ function nextPhase(){
   tree.style.opacity = 0;
 
   setTimeout(()=>{
-    tree.src = "fa-fazisok.png#"+phase; 
+    tree.src = "fa" + phase + ".png";
     tree.style.opacity = 1;
   }, 700);
 }
