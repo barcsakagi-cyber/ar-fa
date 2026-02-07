@@ -3,67 +3,121 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A fa növekedése</title>
+<title>A fa titka</title>
 
 <style>
 body{
   margin:0;
-  background:#f6efe7;
+  font-family:Georgia, serif;
+  background:#f4efe6;
   display:flex;
   justify-content:center;
   align-items:center;
   height:100vh;
-  font-family:Georgia, serif;
 }
 
-.container{
+#game{
+  width:90vw;
+  max-width:500px;
   text-align:center;
 }
 
-img{
-  width:90vw;
-  max-width:500px;
-  transition:opacity 1.5s ease;
+h2{ margin-bottom:10px; }
+
+input{
+  padding:10px;
+  font-size:18px;
+  width:120px;
+  text-align:center;
 }
 
 button{
-  margin-top:20px;
-  padding:12px 20px;
+  margin-top:15px;
+  padding:10px 18px;
+  font-size:16px;
   border:none;
   background:#6e4b2a;
   color:white;
   border-radius:8px;
-  font-size:16px;
 }
+
+.hidden{ display:none; }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-  <img id="tree" src="fa1.png">
-  <br>
-  <button onclick="nextPhase()">Tovább</button>
+<div id="game">
+
+  <!-- 1 -->
+  <div class="step" id="step1">
+    <h2>Évgyűrűk</h2>
+    <p>Számold meg a gyűrűket, majd számold ki:<br><b>8 + 4 × 2</b></p>
+    <input id="a1">
+    <br><button onclick="check(1,'16')">Tovább</button>
+  </div>
+
+  <!-- 2 -->
+  <div class="step hidden" id="step2">
+    <h2>Lomb-árnyék</h2>
+    <p>A párosításból kapott szám:</p>
+    <input id="a2">
+    <br><button onclick="check(2,'7')">Tovább</button>
+  </div>
+
+  <!-- 3 -->
+  <div class="step hidden" id="step3">
+    <h2>Kertész útvonala</h2>
+    <p>Kövesd az útvonalat. Mi a végpont koordinátája?<br>(pl. B3 → 23)</p>
+    <input id="a3">
+    <br><button onclick="check(3,'23')">Tovább</button>
+  </div>
+
+  <!-- 4 -->
+  <div class="step hidden" id="step4">
+    <h2>Botanikusi kód</h2>
+    <p>A hiányzó betű sorszáma az ábécében:</p>
+    <input id="a4">
+    <br><button onclick="check(4,'11')">Tovább</button>
+  </div>
+
+  <!-- 5 -->
+  <div class="step hidden" id="step5">
+    <h2>Törzs-magasság</h2>
+    <p>A helyes betűk számmá alakítva adják a kód utolsó részét:</p>
+    <input id="a5">
+    <br><button onclick="finish()">Kész</button>
+  </div>
+
+  <!-- Video -->
+  <div id="end" class="hidden">
+    <video width="100%" autoplay controls>
+      <source src="video.mp4" type="video/mp4">
+    </video>
+  </div>
+
 </div>
 
 <script>
-let phase = 1;
-const tree = document.getElementById("tree");
-
-function nextPhase(){
-  phase++;
-
-  if(phase > 6){
-    alert("Megérkeztél.");
-    return;
+function check(step, solution){
+  const val = document.getElementById("a"+step).value.trim();
+  if(val === solution){
+    document.getElementById("step"+step).classList.add("hidden");
+    document.getElementById("step"+(step+1)).classList.remove("hidden");
+  } else {
+    alert("Nem jó megoldás. Próbáld újra.");
   }
+}
 
-  tree.style.opacity = 0;
+function finish(){
+  const val = document.getElementById("a5").value.trim();
 
-  setTimeout(()=>{
-    tree.src = "fa" + phase + ".png";
-    tree.style.opacity = 1;
-  }, 700);
+  if(val === "512"){   // ← végső kód utolsó része, átírható
+    document.getElementById("step5").classList.add("hidden");
+    document.getElementById("end").classList.remove("hidden");
+  } else {
+    alert("Még nem jó a végső kód.");
+  }
 }
 </script>
 
