@@ -3,45 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A fa titka</title>
+<title>A mi fánk</title>
 
 <style>
 body{
   margin:0;
-  font-family:Georgia, serif;
+  font-family: "Georgia", serif;
   background:#f4efe6;
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
+  min-height:100vh;
 }
 
 #game{
-  width:90vw;
-  max-width:500px;
+  width:92vw;
+  max-width:520px;
+  background:white;
+  padding:28px;
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
   text-align:center;
 }
 
-h2{ margin-bottom:10px; }
+h2{
+  margin-top:0;
+  color:#5a3e25;
+}
+
+p{
+  line-height:1.6;
+}
 
 input{
+  margin-top:14px;
   padding:10px;
   font-size:18px;
-  width:120px;
+  width:180px;
   text-align:center;
+  border-radius:8px;
+  border:1px solid #ccc;
 }
 
 button{
-  margin-top:15px;
-  padding:10px 18px;
+  margin-top:16px;
+  padding:10px 20px;
   font-size:16px;
   border:none;
   background:#6e4b2a;
   color:white;
-  border-radius:8px;
+  border-radius:10px;
 }
 
-.hidden{ display:none; }
+button:hover{
+  background:#5c3f24;
+}
+
+.hidden{
+  display:none;
+}
+
+#finalText{
+  margin-top:30px;
+  text-align:left;
+  line-height:1.7;
+  animation: fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn{
+  from{ opacity:0; }
+  to{ opacity:1; }
+}
 </style>
 </head>
 
@@ -49,75 +81,136 @@ button{
 
 <div id="game">
 
-  <!-- 1 -->
-  <div class="step" id="step1">
-    <h2>Évgyűrűk</h2>
-    <p>Számold meg a gyűrűket, majd számold ki:<br><b>8 + 4 × 2</b></p>
-    <input id="a1">
-    <br><button onclick="check(1,'16')">Tovább</button>
-  </div>
+<!-- 1 -->
+<div class="step" id="step1">
+<h2>1. állomás</h2>
+<p>
+A találkozásunk óta hosszú idő telt el.  
+Fejtsd meg ezt az idő rejtvényt, hogy közelebb kerülj a jelenünkhöz.
+</p>
+<p><b>H – K – S – C – P – S – ?</b></p>
+<input id="a1" maxlength="1">
+<br>
+<button onclick="check(1,'V')">Tovább</button>
+</div>
 
-  <!-- 2 -->
-  <div class="step hidden" id="step2">
-    <h2>Lomb-árnyék</h2>
-    <p>A párosításból kapott szám:</p>
-    <input id="a2">
-    <br><button onclick="check(2,'7')">Tovább</button>
-  </div>
+<!-- 2 -->
+<div class="step hidden" id="step2">
+<h2>2. állomás</h2>
+<p>
+Minden szépen sorban haladt az életünkben, akárcsak ahogy ez a fa növekszik.  
+Tedd helyes sorrendbe az alábbi fákat:
+</p>
+<p>
+Egy Tölgyet, egy Fűzfát, egy Nyírfát és egy Bükköt.
+</p>
+<p>
+A Nyírfa nem az első és nem az utolsó.  
+A Tölgy közvetlenül a Bükk után áll.  
+A Fűzfa üdvözli a látogatókat a kertben.
+</p>
+<input id="a2" placeholder="pl. FNYBT">
+<br>
+<button onclick="check(2,'FNYBT')">Tovább</button>
+</div>
 
-  <!-- 3 -->
-  <div class="step hidden" id="step3">
-    <h2>Kertész útvonala</h2>
-    <p>Kövesd az útvonalat. Mi a végpont koordinátája?<br>(pl. B3 → 23)</p>
-    <input id="a3">
-    <br><button onclick="check(3,'23')">Tovább</button>
-  </div>
+<!-- 3 -->
+<div class="step hidden" id="step3">
+<h2>3. állomás</h2>
+<p>
+Minden jól működő kapcsolat kulcsa a kommunikáció.  
+A szavaknak van a legnagyobb súlya, de a legnagyobb értéke is olykor.
+</p>
+<p>
+Mi az alábbi szó értéke?<br><b>LEVÉL</b>
+</p>
+<input id="a3">
+<br>
+<button onclick="check(3,'105')">Tovább</button>
+</div>
 
-  <!-- 4 -->
-  <div class="step hidden" id="step4">
-    <h2>Botanikusi kód</h2>
-    <p>A hiányzó betű sorszáma az ábécében:</p>
-    <input id="a4">
-    <br><button onclick="check(4,'11')">Tovább</button>
-  </div>
+<!-- 4 -->
+<div class="step hidden" id="step4">
+<h2>4. állomás</h2>
+<p>
+Néha, a nehéz időkben eltávolodtunk egymástól,  
+de mindig sikerült megtalálni azt a kapcsot,  
+ami még ilyenkor is összetartott minket.
+</p>
+<p>
+Keresd meg, mi áll a <b>VAD</b> és a <b>FA</b> szó között.
+</p>
+<input id="a4">
+<br>
+<button onclick="check(4,'ALMA')">Tovább</button>
+</div>
 
-  <!-- 5 -->
-  <div class="step hidden" id="step5">
-    <h2>Törzs-magasság</h2>
-    <p>A helyes betűk számmá alakítva adják a kód utolsó részét:</p>
-    <input id="a5">
-    <br><button onclick="finish()">Kész</button>
-  </div>
+<!-- 5 -->
+<div class="step hidden" id="step5">
+<h2>5. állomás</h2>
+<p>
+A legnagyobb csoda az életünkben a kislányunk, Lulu.  
+Ha születne még két lányunk és a harmadikat Lilinek hívnák,  
+akkor a titkos szabály szerint mi lenne a középső lányunk neve?
+</p>
+<input id="a5">
+<br>
+<button onclick="finish()">Befejezés</button>
+</div>
 
-  <!-- Video -->
-  <div id="end" class="hidden">
-    <video width="100%" autoplay controls>
-      <source src="video.mp4" type="video/mp4">
-    </video>
+<!-- videó + szöveg -->
+<div id="end" class="hidden">
+  <video id="finalVideo" width="100%" autoplay controls onended="showMessage()">
+    <source src="video.mp4" type="video/mp4">
+  </video>
+
+  <div id="finalText" class="hidden">
+    <p><b>A mi kapcsolatunk két fából áll:</b></p>
+
+    <p>
+    A Fekete kőris a csendes kitartást és az átalakulást szimbolizálja.
+    Nehéz helyeken nő, szépen alkalmazkodik, és a megfelelő gondoskodás
+    mellett váratlanul kifinomulttá válik. Természetes mintázata emlékeztet
+    minket arra, hogy a tökéletlenség teszi igazán különlegessé a dolgokat.
+    </p>
+
+    <p>
+    A sivatagi vasfa az erőt, kitartást és ellenálló képességet szimbolizálja.
+    Képessége, hogy zord sivatagi körülmények között is virágozzon,
+    az alkalmazkodóképességet és a kitartást tükrözi.
+    </p>
   </div>
+</div>
 
 </div>
 
 <script>
+function normalize(text){
+  return text.trim().toUpperCase();
+}
+
 function check(step, solution){
-  const val = document.getElementById("a"+step).value.trim();
+  const val = normalize(document.getElementById("a"+step).value);
   if(val === solution){
     document.getElementById("step"+step).classList.add("hidden");
     document.getElementById("step"+(step+1)).classList.remove("hidden");
   } else {
-    alert("Nem jó megoldás. Próbáld újra.");
+    alert("Ez most nem jó megoldás. Próbáld újra. 🌿");
   }
 }
 
 function finish(){
-  const val = document.getElementById("a5").value.trim();
-
-  if(val === "512"){   // ← végső kód utolsó része, átírható
+  const val = normalize(document.getElementById("a5").value);
+  if(val === "LOLO"){
     document.getElementById("step5").classList.add("hidden");
     document.getElementById("end").classList.remove("hidden");
   } else {
-    alert("Még nem jó a végső kód.");
+    alert("Még nem jó a válasz. Gondold át újra. 🌿");
   }
+}
+
+function showMessage(){
+  document.getElementById("finalText").classList.remove("hidden");
 }
 </script>
 
