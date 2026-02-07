@@ -8,7 +8,7 @@
 <style>
 body{
   margin:0;
-  font-family: "Georgia", serif;
+  font-family: Georgia, serif;
   background:#f4efe6;
   display:flex;
   justify-content:center;
@@ -19,30 +19,29 @@ body{
 #game{
   width:92vw;
   max-width:520px;
-  background:white;
-  padding:28px;
-  border-radius:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.08);
   text-align:center;
 }
 
-h2{
-  margin-top:0;
-  color:#5a3e25;
+.tree{
+  width:100%;
+  cursor:pointer;
+  border-radius:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.12);
 }
 
-p{
-  line-height:1.6;
+.card{
+  background:white;
+  padding:24px;
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
 }
 
 input{
   margin-top:14px;
   padding:10px;
   font-size:18px;
-  width:180px;
+  width:160px;
   text-align:center;
-  border-radius:8px;
-  border:1px solid #ccc;
 }
 
 button{
@@ -55,13 +54,7 @@ button{
   border-radius:10px;
 }
 
-button:hover{
-  background:#5c3f24;
-}
-
-.hidden{
-  display:none;
-}
+.hidden{ display:none; }
 
 #finalText{
   margin-top:30px;
@@ -71,8 +64,8 @@ button:hover{
 }
 
 @keyframes fadeIn{
-  from{ opacity:0; }
-  to{ opacity:1; }
+  from{opacity:0;}
+  to{opacity:1;}
 }
 </style>
 </head>
@@ -81,84 +74,19 @@ button:hover{
 
 <div id="game">
 
-<!-- 1 -->
-<div class="step" id="step1">
-<h2>1. állomás</h2>
-<p>
-A találkozásunk óta hosszú idő telt el.  
-Fejtsd meg ezt az idő rejtvényt, hogy közelebb kerülj a jelenünkhöz.
-</p>
-<p><b>H – K – S – C – P – S – ?</b></p>
-<input id="a1" maxlength="1">
-<br>
-<button onclick="check(1,'V')">Tovább</button>
+<!-- KEZDŐ FA -->
+<img id="treeImg" class="tree" src="fa1.jpg" onclick="openPuzzle()">
+
+<!-- FELADAT -->
+<div id="puzzle" class="card hidden">
+  <h2 id="title"></h2>
+  <p id="text"></p>
+  <input id="answer">
+  <br>
+  <button onclick="checkAnswer()">Tovább</button>
 </div>
 
-<!-- 2 -->
-<div class="step hidden" id="step2">
-<h2>2. állomás</h2>
-<p>
-Minden szépen sorban haladt az életünkben, akárcsak ahogy ez a fa növekszik.  
-Tedd helyes sorrendbe az alábbi fákat:
-</p>
-<p>
-Egy Tölgyet, egy Fűzfát, egy Nyírfát és egy Bükköt.
-</p>
-<p>
-A Nyírfa nem az első és nem az utolsó.  
-A Tölgy közvetlenül a Bükk után áll.  
-A Fűzfa üdvözli a látogatókat a kertben.
-</p>
-<input id="a2" placeholder="pl. FNYBT">
-<br>
-<button onclick="check(2,'FNYBT')">Tovább</button>
-</div>
-
-<!-- 3 -->
-<div class="step hidden" id="step3">
-<h2>3. állomás</h2>
-<p>
-Minden jól működő kapcsolat kulcsa a kommunikáció.  
-A szavaknak van a legnagyobb súlya, de a legnagyobb értéke is olykor.
-</p>
-<p>
-Mi az alábbi szó értéke?<br><b>LEVÉL</b>
-</p>
-<input id="a3">
-<br>
-<button onclick="check(3,'105')">Tovább</button>
-</div>
-
-<!-- 4 -->
-<div class="step hidden" id="step4">
-<h2>4. állomás</h2>
-<p>
-Néha, a nehéz időkben eltávolodtunk egymástól,  
-de mindig sikerült megtalálni azt a kapcsot,  
-ami még ilyenkor is összetartott minket.
-</p>
-<p>
-Keresd meg, mi áll a <b>VAD</b> és a <b>FA</b> szó között.
-</p>
-<input id="a4">
-<br>
-<button onclick="check(4,'ALMA')">Tovább</button>
-</div>
-
-<!-- 5 -->
-<div class="step hidden" id="step5">
-<h2>5. állomás</h2>
-<p>
-A legnagyobb csoda az életünkben a kislányunk, Lulu.  
-Ha születne még két lányunk és a harmadikat Lilinek hívnák,  
-akkor a titkos szabály szerint mi lenne a középső lányunk neve?
-</p>
-<input id="a5">
-<br>
-<button onclick="finish()">Befejezés</button>
-</div>
-
-<!-- videó + szöveg -->
+<!-- VIDEÓ + SZÖVEG -->
 <div id="end" class="hidden">
   <video id="finalVideo" width="100%" autoplay controls onended="showMessage()">
     <source src="video.mp4" type="video/mp4">
@@ -185,27 +113,86 @@ akkor a titkos szabály szerint mi lenne a középső lányunk neve?
 </div>
 
 <script>
-function normalize(text){
-  return text.trim().toUpperCase();
+const puzzles = [
+{
+title:"1. állomás",
+text:`A találkozásunk óta hosszú idő telt el.
+Fejtsd meg ezt az idő rejtvényt, hogy közelebb kerülj a jelenünkhöz.
+H – K – S – C – P – S – ?
+Milyen betű kerül a kérdőjel helyére?`,
+answer:"V",
+tree:"fa2.jpg"
+},
+{
+title:"2. állomás",
+text:`Minden szépen sorban haladt az életünkben, akárcsak ahogy ez a fa növekszik.
+Tedd helyes sorrendbe az alábbi fákat:
+
+Egy Tölgyet, egy Fűzfát, egy Nyírfát és egy Bükköt.
+
+A Nyírfa nem az első és nem az utolsó.
+A Tölgy közvetlenül a Bükk után áll.
+A Fűzfa üdvözli a látogatókat a kertben.`,
+answer:"FNYBT",
+tree:"fa3.jpg"
+},
+{
+title:"3. állomás",
+text:`Minden jól működő kapcsolat kulcsa a kommunikáció.
+A szavaknak van a legnagyobb súlya, de a legnagyobb értéke is olykor.
+
+Mi az alábbi szó értéke?
+LEVÉL`,
+answer:"105",
+tree:"fa4.jpg"
+},
+{
+title:"4. állomás",
+text:`Néha, a nehéz időkben eltávolodtunk egymástól,
+de mindig sikerült megtalálni azt a kapcsot,
+ami még ilyenkor is összetartott minket.
+
+Keresd meg, mi áll a VAD és a FA szó között?`,
+answer:"ALMA",
+tree:"fa5.jpg"
+},
+{
+title:"5. állomás",
+text:`A legnagyobb csoda az életünkben a kislányunk, Lulu.
+Ha születne még két lányunk és a harmadikat Lilinek hívnák,
+akkor a titkos szabály szerint mi lenne a középső lányunk neve?`,
+answer:"LOLO",
+tree:null
+}
+];
+
+let current = -1;
+
+function openPuzzle(){
+  if(current === puzzles.length-1) return;
+  current++;
+  document.getElementById("puzzle").classList.remove("hidden");
+  document.getElementById("title").innerText = puzzles[current].title;
+  document.getElementById("text").innerText = puzzles[current].text;
+  document.getElementById("answer").value = "";
 }
 
-function check(step, solution){
-  const val = normalize(document.getElementById("a"+step).value);
-  if(val === solution){
-    document.getElementById("step"+step).classList.add("hidden");
-    document.getElementById("step"+(step+1)).classList.remove("hidden");
-  } else {
-    alert("Ez most nem jó megoldás. Próbáld újra. 🌿");
-  }
-}
+function checkAnswer(){
+  const val = document.getElementById("answer").value.trim().toUpperCase();
 
-function finish(){
-  const val = normalize(document.getElementById("a5").value);
-  if(val === "LOLO"){
-    document.getElementById("step5").classList.add("hidden");
-    document.getElementById("end").classList.remove("hidden");
+  if(val === puzzles[current].answer){
+
+    document.getElementById("puzzle").classList.add("hidden");
+
+    if(puzzles[current].tree){
+      document.getElementById("treeImg").src = puzzles[current].tree;
+    }else{
+      document.getElementById("treeImg").classList.add("hidden");
+      document.getElementById("end").classList.remove("hidden");
+    }
+
   } else {
-    alert("Még nem jó a válasz. Gondold át újra. 🌿");
+    alert("Ez most nem jó megoldás. 🌿");
   }
 }
 
